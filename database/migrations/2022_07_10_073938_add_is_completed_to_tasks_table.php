@@ -13,11 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tasks', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->foreignId('user_id')->constrained('users')->onDelete(('cascade'));
-            $table->timestamps();
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->boolean('is_completed')->default(false);
         });
     }
 
@@ -28,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tasks');
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->dropColumn('is_completed');
+        });
     }
 };

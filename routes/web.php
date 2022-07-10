@@ -18,11 +18,10 @@ require __DIR__ . '/auth.php';
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->middleware('auth')->name('dashboard');
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
+Route::get('/', [TaskController::class, 'index']);
+Route::patch('/tasks/{task}/complete', [TaskController::class, 'complete'])->name('tasks.complete');
+Route::get('/tasks/completed', [TaskController::class, 'completed'])->name('tasks.completed');
+Route::patch('/tasks/{task}/resume', [TaskController::class, 'resume'])->name('tasks.resume');
 Route::resource('tasks', TaskController::class);
